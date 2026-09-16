@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int coeff;
+    int power;
+    struct Node *next;
+};
+
+// Create a new node
+struct Node* createNode(int coeff, int power) {
+    struct Node *newNode;
+
+    newNode = (struct Node*)malloc(sizeof(struct Node));
+
+    newNode->coeff = coeff;
+    newNode->power = power;
+    newNode->next = NULL;
+
+    return newNode;
+}
+
+// Insert node at the end
+struct Node* insert(struct Node *head, int coeff, int power) {
+    struct Node *newNode = createNode(coeff, power);
+    struct Node *temp;
+
+    if (head == NULL) {
+        return newNode;
+    }
+
+    temp = head;
+
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+
+    temp->next = newNode;
+
+    return head;
+}
+
+// Display polynomial
+void display(struct Node *head) {
+    struct Node *temp = head;
+
+    while (temp != NULL) {
+        printf("%dx^%d", temp->coeff, temp->power);
+
+        if (temp->next != NULL) {
+            printf(" + ");
+        }
+
+        temp = temp->next;
+    }
+
+    printf("\n");
+}
+
+int main() {
+    struct Node *head = NULL;
+
+    head = insert(head, 5, 3);
+    head = insert(head, 4, 2);
+    head = insert(head, 2, 1);
+    head = insert(head, 7, 0);
+
+    printf("Polynomial: ");
+    display(head);
+
+    return 0;
+}
